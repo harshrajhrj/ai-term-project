@@ -1,7 +1,6 @@
 import chess
 import chess.engine
 
-# Evaluation Function for Scoring the Board
 def evaluate_board(board):
     piece_values = {
         chess.PAWN: 1,
@@ -21,7 +20,6 @@ def evaluate_board(board):
     
     return score
 
-# Minimax with Alpha-Beta Pruning
 def minimax(board, depth, alpha, beta, maximizing_player):
     if depth == 0 or board.is_game_over():
         return evaluate_board(board)
@@ -68,23 +66,38 @@ def select_best_move(board, depth):
                 best_move = move
     
     return best_move
+def get_user_move(board):
+    while True:
+        try:
+            user_input = input("Enter your move (e.g., e2e4): ")
+            move = chess.Move.from_uci(user_input)
+            
+            if move in board.legal_moves:
+                board.push(move)
+                break
+            else:
+                print("Invalid move. Try again.")
+        
+        except ValueError:
+            print("Invalid format.")
 
 def play_chess():
     board = chess.Board()
     depth = 3
+    print(type(board))
 
     while not board.is_game_over():
-        if board.turn == chess.WHITE:
-            print("\nWhite's turn")
-            # White makes the best move using Minimax
-            move = select_best_move(board, depth)
-        else:
-            print("\nBlack's turn")
-            # Black also uses Minimax
-            move = select_best_move(board, depth)
-
-        board.push(move)
         print(board)
+        if board.turn == chess.WHITE:
+            print()
+            print("Your turn: ")
+            get_user_move(board)
+        else:
+            print()
+            print("Agent's turn: ", end='')
+            move = select_best_move(board, depth)
+            board.push(move)
+            print(move)
 
     print("\nGame Over:", board.result())
 
