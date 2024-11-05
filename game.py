@@ -9,15 +9,14 @@ def evaluate_board(board):
         chess.BISHOP: 3,
         chess.ROOK: 5,
         chess.QUEEN: 9,
-        chess.KING: 0  # King's value is high, but we typically avoid assigning it.
+        chess.KING: 0
     }
     
-    # Initialize the score
     score = 0
     for piece_type in piece_values:
-        # Sum values for white pieces
+        # calculating sum values for white pieces
         score += len(board.pieces(piece_type, chess.WHITE)) * piece_values[piece_type]
-        # Subtract values for black pieces
+        # calculating sum values for black pieces
         score -= len(board.pieces(piece_type, chess.BLACK)) * piece_values[piece_type]
     
     return score
@@ -36,7 +35,7 @@ def minimax(board, depth, alpha, beta, maximizing_player):
             max_eval = max(max_eval, eval)
             alpha = max(alpha, eval)
             if beta <= alpha:
-                break  # Beta cut-off
+                break  # Beta
         return max_eval
     else:
         min_eval = float('inf')
@@ -47,10 +46,9 @@ def minimax(board, depth, alpha, beta, maximizing_player):
             min_eval = min(min_eval, eval)
             beta = min(beta, eval)
             if beta <= alpha:
-                break  # Alpha cut-off
+                break  # Alpha
         return min_eval
 
-# Choosing the Best Move
 def select_best_move(board, depth):
     best_move = None
     best_value = -float('inf') if board.turn == chess.WHITE else float('inf')
