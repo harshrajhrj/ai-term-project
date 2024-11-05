@@ -3,7 +3,6 @@ import chess.engine
 
 # Evaluation Function for Scoring the Board
 def evaluate_board(board):
-    # Basic material score
     piece_values = {
         chess.PAWN: 1,
         chess.KNIGHT: 3,
@@ -72,10 +71,9 @@ def select_best_move(board, depth):
     
     return best_move
 
-# Main Function to Run the Chess Agent
 def play_chess():
     board = chess.Board()
-    depth = 3  # Depth of search; can increase for a stronger agent but will take more time
+    depth = 3
 
     while not board.is_game_over():
         if board.turn == chess.WHITE:
@@ -92,5 +90,4 @@ def play_chess():
 
     print("\nGame Over:", board.result())
 
-# Run the chess game
 play_chess()
